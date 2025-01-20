@@ -1,0 +1,395 @@
+/* Double Linked List:
+   With double linked list we can go in forward direction as well as in backward direction
+   Example: While searching for something on the browser we can go to the next pages as well as to the previous pages */
+
+#include<stdio.h>
+#include<conio.h>
+#include<stdlib.h>
+
+struct node
+{
+	struct node *prev;
+	int n;
+	struct node *next;
+};
+
+struct node *temp,*curr,*pr;
+struct node* create(struct node *x);
+void display(struct node *x);
+void insend(struct node *x);
+struct node* insbeg(struct node *x);
+void inspos(struct node *x);
+struct node* delbeg(struct node *x);
+struct node* delend(struct node *x);
+void delpos(struct node *x);
+void reverse(struct node *x);
+void count(struct node *x);
+void search(struct node *x);
+void split(struct node *x);
+void merge(struct node *x, struct node *y);
+void sort(struct node *x);
+int main()
+{
+	struct node *s,*s1;
+	int ch,ch2;
+	clrscr();
+	s=NULL;
+	s1=NULL;
+	do
+	{
+		printf("1.Create\n");
+		printf("2.Display\n");
+		printf("3.Insend\n");
+		printf("4.Insbeg\n");
+		printf("5.Inspos\n");
+		printf("6.Delend\n");
+		printf("7.Delbeg\n");
+		printf("8.Delpos\n");
+		printf("9.Reverse\n");
+		printf("10.Count\n");
+		printf("11.Search\n");
+		printf("12.Split\n");
+		printf("13.Merge\n");
+		printf("14.Sort\n");
+		printf("15.Exit\n");
+		printf("Enter your choice\n");
+		scanf("%d",&ch);
+		switch(ch)
+		{
+			case 1:
+					printf("1.First list\n2.Second list\n");
+					scanf("%d",&ch2);
+					if(ch2==1)
+					{
+						s=create(s);
+						break;
+					}
+					else if(ch2==2)
+					{
+						s1=create(s1);
+						break;
+					}
+			case 2:
+					printf("1.First list\n2.Second list\n");
+					scanf("%d",&ch2);
+					if(ch2==1)
+					{
+						display(s);
+						break;
+					}
+					else if(ch2==2)
+					{
+						display(s1);
+						break;
+					}
+
+			case 3:
+					printf("1.First list\n2.Second list\n");
+					scanf("%d",&ch2);
+					if(ch2==1)
+					{
+						insend(s);
+						break;
+					}
+					else if(ch2==2)
+					{
+						insend(s1);
+						break;
+					}
+
+			case 4:
+					s=insbeg(s);
+					break;
+			case 5:
+					inspos(s);
+					break;
+			case 6:
+					s=delend(s);
+					break;
+			case 7:
+					s=delbeg(s);
+					break;
+			case 8:
+					delpos(s);
+					break;
+			case 9:
+					reverse(s);
+					break;
+			case 10:
+					count(s);
+					break;
+			case 11:
+					search(s);
+					break;
+			case 12:
+					split(s);
+					break;
+			case 13:
+					merge(s,s1);
+					break;
+			case 14:
+					sort(s);
+					break;
+			}
+	}while(ch!=15);
+	return 0;
+}
+
+struct node* create(struct node *x)
+{
+	if(x==NULL)
+	{
+		x=(struct node*)malloc(sizeof(struct node));
+		printf("Enter the number\n");
+		scanf("%d",&x->n);
+		x->prev=NULL;
+		x->next=NULL;
+		return x;
+	}
+	else
+	{
+		printf("Node has been created already\n");
+		return x;
+	}
+}
+
+void display(struct node *x)
+{
+	curr=x;
+	while(curr!=NULL)
+	{
+		printf("%d->",curr->n);
+		curr=curr->next;
+	}
+	printf("\n");
+}
+
+void insend(struct node *x)
+{
+	curr=x;
+	while(curr->next!=NULL)
+	{
+		curr=curr->next;
+	}
+	temp=(struct node*)malloc(sizeof(struct node));
+	printf("Enter the number\n");
+	scanf("%d",&temp->n);
+	temp->next=NULL;
+	temp->prev=curr;
+	curr->next=temp;
+}
+
+struct node* insbeg(struct node *x)
+{
+	temp=(struct node*)malloc(sizeof(struct node));
+	printf("Enter the number\n");
+	scanf("%d",&temp->n);
+	temp->prev=NULL;
+	temp->next=x;
+	x->prev=temp;
+	return temp;
+}
+
+void inspos(struct node *x)
+{
+	int pos,c=0;
+	curr=x;
+	printf("Enter the position where you want to insert new node\n");
+	scanf("%d",&pos);
+	while(curr->next!=NULL)
+	{
+		c++;
+		if(c==pos-1)
+		{
+			temp=(struct node*)malloc(sizeof(struct node));
+			printf("Enter the number\n");
+			scanf("%d",&temp->n);
+			temp->next=curr->next;
+			curr->next=temp;
+			temp->prev=curr;
+			break;
+		}
+		curr=curr->next;
+	}
+}
+struct node* delbeg(struct node *x)
+{
+	curr=x;
+	if(curr==NULL)
+	{
+		printf("No node to be deleted\n");
+		return curr;
+	}
+	else if(curr->next==NULL)
+	{
+		printf("Deleting the one and only available node\n");
+		free(curr);
+		curr=NULL;
+		return curr;
+	}
+	else
+	{
+		curr=curr->next;
+		curr->prev=NULL;
+		free(x);
+		x=NULL;
+		return curr;
+	}
+}
+
+struct node* delend(struct node *x)
+{
+	curr=x;
+	if(curr==NULL)
+	{
+		printf("No node to be deleted\n");
+		return curr;
+	}
+	else if(curr->next==NULL)
+	{
+		printf("Deleting the one and only avaialble node\n");
+		curr->next=NULL;
+		free(curr);
+		curr=NULL;
+		return curr;
+	}
+	else
+	{
+		while(curr->next!=NULL)
+		{
+			pr=curr;
+			curr=curr->next;
+		}
+		pr->next=NULL;
+		free(curr);
+		curr=NULL;
+		curr->prev=NULL;
+		return x;
+	}
+}
+
+void delpos(struct node *x)
+{
+	int c=0,pos;
+	curr=x;
+	printf("Enter the position you want to delete\n");
+	scanf("%d",&pos);
+	while(curr->next!=NULL)
+	{
+		c++;
+		if(c==pos-1)
+		{
+			curr->next->prev=NULL;
+			temp=curr->next;
+			curr->next=curr->next->next;
+			free(temp);
+			break;
+		}
+		curr=curr->next;
+	}
+}
+
+void reverse(struct node *x)
+{
+	curr=x;
+	while(curr->next!=NULL)
+	{
+		curr=curr->next;
+	}
+
+	while(curr!=NULL)
+	{
+		printf("%d->",curr->n);
+		curr=curr->prev;
+	}
+	printf("\n");
+}
+void count(struct node *x)
+{
+	int c=0;
+	curr=x;
+	while(curr!=NULL)
+	{
+		c++;
+		curr=curr->next;
+	}
+	printf("%d nodes are present in the list\n",c);
+}
+
+void search(struct node *x)
+{
+	int se;
+	printf("Enter the searching element\n");
+	scanf("%d",&se);
+	curr=x;
+	while(curr!=NULL)
+	{
+		if(se==curr->n)
+		{
+			printf("Element found\n");
+			break;
+		}
+		curr=curr->next;
+	}
+	if(curr==NULL)
+	{
+		printf("Element not found\n");
+	}
+}
+
+void split(struct node *x)
+{
+	int pos,c=0;
+	curr=x;
+	printf("Enter position till where you want to split\n");
+	scanf("%d",&pos);
+	while(curr!=NULL)
+	{
+		c++;
+		if(c==pos)
+		{
+			temp=curr->next;
+			curr->next=NULL;
+			temp->prev=NULL;
+			free(temp);
+			break;
+		}
+		curr=curr->next;
+	}
+}
+
+void merge(struct node *x, struct node *y)
+{
+	curr=x;
+	while(curr->next!=NULL)
+	{
+		curr=curr->next;
+	}
+	curr->next=y;
+	y->prev=curr;
+}
+
+void sort(struct node *x)
+{
+	int i,j,c=0,te;
+	curr=x;
+	while(curr!=NULL)
+	{
+		c++;
+		curr=curr->next;
+	}
+	for(i=0;i<c-1;i++)
+	{
+		curr=x;
+		for(j=0;j<c-i-1;j++)
+		{
+			if(curr->n > curr->next->n)
+			{
+				te=curr->n;
+				curr->n=curr->next->n;
+				curr->next->n=te;
+			}
+			curr=curr->next;
+		}
+	}
+}
