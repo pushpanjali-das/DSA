@@ -1,0 +1,449 @@
+/* Single Linked List */
+
+#include<stdio.h>
+#include<conio.h>
+#include<stdlib.h>
+
+struct node
+{
+	int n;
+	struct node *next;
+};
+
+struct node *curr,*prev,*temp,*last;
+struct node* create(struct node *x);
+void display(struct node *x);
+void insend(struct node *x);
+struct node* insbeg(struct node *x);
+void inspos(struct node *x);
+void count(struct node *x);
+void search(struct node *x);
+struct node* delbeg(struct node *x);
+struct node* delend(struct node *x);
+void delpos(struct node *x);
+void reverse(struct node *x);
+void split(struct node *x);
+void merge(struct node *x, struct node *y);
+void sort(struct node *x);
+
+int main()
+{
+	struct node *s,*s1;
+	int ch,ch1;
+	clrscr();
+	s=NULL;
+	s1=NULL;
+	do
+	{
+		printf("1.Create\n");
+		printf("2.Display\n");
+		printf("3.Insend\n");
+		printf("4.Insbeg\n");
+		printf("5.Inspos\n");
+		printf("6.Count\n");
+		printf("7.Search\n");
+		printf("8.Delbeg\n");
+		printf("9.Delend\n");
+		printf("10.Delpos\n");
+		printf("11.Reverse\n");
+		printf("12.Split\n");
+		printf("13.Merge\n");
+		printf("14.Sort\n");
+		printf("15.Exit\n");
+		printf("Enter your choice\n");
+		scanf("%d",&ch);
+		switch(ch)
+		{
+			case 1:
+				printf("Enter 1 for linked list-1 and 2 for linked list-2\n");
+				scanf("%d",&ch1);
+				if(ch1==1)
+					s=create(s);
+				else
+					s1=create(s1);
+				break;
+
+			case 2:
+				printf("Enter 1 for linked list-1 and 2 for linked list-2\n");
+				scanf("%d",&ch1);
+				if(ch1==1)
+					display(s);
+				else
+					display(s1);
+				break;
+
+			case 3:
+				printf("Enter 1 for linked list-1 and 2 for linked list-2\n");
+				scanf("%d",&ch1);
+				if(ch1==1)
+					insend(s);
+				else
+					insend(s1);
+				break;
+
+			case 4:
+				printf("Enter 1 for linked list-1 and 2 for linked list-2\n");
+				scanf("%d",&ch1);
+				if(ch1==1)
+					s=insbeg(s);
+				else
+					s1=insbeg(s1);
+				break;
+
+			case 5:
+				printf("Enter 1 for linked list-1 and 2 for linked list-2\n");
+				scanf("%d",&ch1);
+				if(ch1==1)
+					inspos(s);
+				else
+					inspos(s1);
+				break;
+
+			case 6:
+				printf("Enter 1 for linked list-1 and 2 for linked list-2\n");
+				scanf("%d",&ch1);
+				if(ch1==1)
+					count(s);
+				else
+					count(s1);
+				break;
+
+			case 7:
+				printf("Enter 1 for linked list-1 and 2 for linked list-2\n");
+				scanf("%d",&ch1);
+				if(ch1==1)
+					search(s);
+				else
+					search(s1);
+				break;
+
+			case 8:
+				printf("Enter 1 for linked list-1 and 2 for linked list-2\n");
+				scanf("%d",&ch1);
+				if(ch1==1)
+					s=delbeg(s);
+				else
+					s1=delbeg(s1);
+				break;
+
+			case 9:
+				printf("Enter 1 for linked list-1 and 2 for linked list-2\n");
+				scanf("%d",&ch1);
+				if(ch1==1)
+				{
+					s=delend(s);
+				}
+				else
+				{
+					s1=delend(s1);
+				}
+				break;
+
+			case 10:
+				printf("Enter 1 for linked list-1 and 2 for linked list-2\n");
+				scanf("%d",&ch1);
+				if(ch1==1)
+					delpos(s);
+				else
+					delpos(s1);
+				break;
+
+			case 11:
+				printf("Enter 1 for linked list-1 and 2 for linked list-2\n");
+				scanf("%d",&ch1);
+				if(ch1==1)
+					reverse(s);
+				else
+					reverse(s1);
+				break;
+
+			case 12:
+				printf("Enter 1 for linked list-1 and 2 for linked list-2\n");
+				scanf("%d",&ch1);
+				if(ch1==1)
+					split(s);
+				else
+					split(s1);
+				break;
+
+			case 13:
+				printf("Enter 1 for linked list-1 and 2 for linked list-2\n");
+				scanf("%d",&ch1);
+				if(ch1==1)
+					merge(s,s1);
+				else
+					merge(s1,s);
+				break;
+
+			case 14:
+				printf("Enter 1 for linked list-1 and 2 for linked list-2\n");
+				scanf("%d",&ch1);
+				if(ch1==1)
+					sort(s);
+				else
+					sort(s1);
+				break;
+
+		}
+	}while(ch!=15);
+	return 0;
+}
+
+struct node* create(struct node *x)
+{
+	if(x==NULL)
+	{
+		x=(struct node*)malloc(sizeof(struct node));
+		printf("Enter the number\n");
+		scanf("%d",&x->n);
+		x->next=NULL;
+		return x;
+	}
+	else
+	{
+		printf("Node has been created already\n");
+		return x;
+	}
+}
+
+void display(struct node *x)
+{
+	curr=x;
+	while(curr!=NULL)
+	{
+		printf("%d->",curr->n);
+		curr=curr->next;
+	}
+	printf("\n");
+}
+
+void insend(struct node *x)
+{
+	curr=x;
+	while(curr->next!=NULL)
+	{
+		curr=curr->next;
+	}
+	temp=(struct node*)malloc(sizeof(struct node));
+	printf("Enter the number\n");
+	scanf("%d",&temp->n);
+	temp->next=NULL;
+	curr->next=temp;
+}
+
+struct node* insbeg(struct node *x)
+{
+	curr=x;
+	temp=(struct node*)malloc(sizeof(struct node));
+	printf("Enter the number\n");
+	scanf("%d",&temp->n);
+	temp->next=curr;
+	return temp;
+}
+
+void inspos(struct node *x)
+{
+	int pos,c=0;
+	curr=x;
+	printf("Enter the position where you want to insert the new node\n");
+	scanf("%d",&pos);
+	while(curr!=NULL)
+	{
+		c++;
+		if(c==pos-1)
+		{
+			temp=(struct node*)malloc(sizeof(struct node));
+			printf("Enter the number\n");
+			scanf("%d",&temp->n);
+			temp->next=curr->next;
+			curr->next=temp;
+			break;
+		}
+		curr=curr->next;
+	}
+}
+
+void count(struct node *x)
+{
+	int c=0;
+	curr=x;
+	while(curr!=NULL)
+	{
+		c++;
+		curr=curr->next;
+	}
+	printf("Total %d nodes are present\n",c);
+}
+
+void search(struct node *x)
+{
+	int se;
+	curr=x;
+	printf("Enter the search element\n");
+	scanf("%d",&se);
+	while(curr!=NULL)
+	{
+		if(se==curr->n)
+		{
+			printf("Element found\n");
+			break;
+		}
+		curr=curr->next;
+	}
+	if(curr==NULL)
+	{
+		printf("Element does exist\n");
+	}
+}
+
+struct node* delbeg(struct node *x)
+{
+	curr=x;
+	if(curr==NULL)
+	{
+		printf("No node available to delete\n");
+		return x;
+	}
+	else if(curr->next==NULL)
+	{
+		printf("Deleting the one and only available node\n");
+		free(curr);
+		curr=NULL;
+		x=NULL;
+		return x;
+	}
+	else
+	{
+		x=curr->next;
+		free(curr);
+		curr=NULL;
+		return x;
+	}
+}
+
+struct node* delend(struct node *x)
+{
+	curr=x;
+	if(curr==NULL)
+	{
+		printf("No node to be deleted\n");
+		return x;
+	}
+	else if(curr->next==NULL)
+	{
+		printf("Deleting the one and only available node\n");
+		free(curr); // The address available in both curr and x is freed or released and given back to OS. Assigning them to NULL is mandatory.
+		curr=NULL;
+		x=NULL;
+		return x;
+	}
+	else
+	{
+		while(curr->next!=NULL)
+		{
+			prev=curr;
+			curr=curr->next;
+		}
+		free(curr);
+		curr=NULL;
+		prev->next=NULL;
+		return x;
+	}
+}
+
+void delpos(struct node *x)
+{
+	int pos,c=0;
+	curr=x;
+	printf("Enter the node position which you want to delete\n");
+	scanf("%d",&pos);
+	while(curr!=NULL)
+	{
+		temp=curr->next;
+		c++;
+		if(c==pos-1)
+		{
+			curr->next=curr->next->next;
+			free(temp);
+			temp=NULL;
+			break;
+		}
+		curr=curr->next;
+	}
+}
+
+void reverse(struct node *x)
+{
+	curr=x;
+	while(curr->next!=NULL)
+	{
+		curr=curr->next;
+	}
+	printf("%d->",curr->n);
+	last=curr;
+	do
+	{
+		curr=x;
+		while(curr->next!=last)
+		{
+			curr=curr->next;
+		}
+		last=curr;
+		printf("%d->",curr->n);
+	}while(last!=x);
+	printf("\n");
+}
+
+void split(struct node *x)
+{
+	int c=0,pos;
+	curr=x;
+	printf("Enter the position till where you want to split\n");
+	scanf("%d",&pos);
+	while(curr!=NULL)
+	{
+		c++;
+		if(c==pos)
+		{
+			curr->next=NULL;
+			break;
+		}
+		curr=curr->next;
+	}
+}
+
+void merge(struct node *x,struct node *y)
+{
+	curr=x;
+	while(curr->next!=NULL)
+	{
+		curr=curr->next;
+	}
+	curr->next=y;
+}
+
+void sort(struct node *x)
+{
+	int c=0,i,j,te;
+	curr=x;
+	while(curr!=NULL)
+	{
+		c++;
+		curr=curr->next;
+	}
+	for(i=0;i<c;i++)
+	{
+		curr=x;
+		for(j=0;j<c-i-1;j++)
+		{
+			if(curr->n > curr->next->n)
+			{
+				te = curr->n;
+				curr->n = curr->next->n;
+				curr->next->n = te;
+			}
+			curr=curr->next;
+		}
+	}
+}
+
