@@ -1,0 +1,382 @@
+/* Circular Linked List Using Single Linked List */
+#include<stdio.h>
+#include<conio.h>
+#include<stdlib.h>
+
+struct node
+{
+	int n;
+	struct node *next;
+};
+
+struct node *create(struct node *x);
+void display(struct node *x);
+void insend(struct node *x);
+struct node *insbeg(struct node *x);
+void inspos(struct node *x);
+struct node *delend(struct node *x);
+struct node *delbeg(struct node *x);
+void delpos(struct node *x);
+void count (struct node *x);
+struct node* merge(struct node *x, struct node *y);
+void sort(struct node *x);
+void split(struct node *x);
+void reverse(struct node *x);
+
+struct node *curr,*temp;
+
+int main()
+{
+	struct node *s,*s1;
+	int ch,ch1;
+	clrscr();
+	s=NULL;
+	s1=NULL;
+	do
+	{
+		printf("1.Create\n");
+		printf("2.Display\n");
+		printf("3.Insend\n");
+		printf("4.Insbeg\n");
+		printf("5.Inspos\n");
+		printf("6.Delend\n");
+		printf("7.Delbeg\n");
+		printf("8.Delpos\n");
+		printf("9.Count\n");
+		printf("10.Merge\n");
+		printf("11.Sort\n");
+		printf("12.Split\n");
+		printf("13.Reverse\n");
+		printf("14.Exit\n");
+		printf("Enter your choice\n");
+		scanf("%d",&ch);
+		switch(ch)
+		{
+			case 1: printf("1.First list\n2.Secondlist\n");
+					scanf("%d",&ch1);
+					if(ch1==1)
+					{
+						s=create(s);
+						break;
+					}
+					else if(ch1==2)
+					{
+						s1=create(s1);
+						break;
+					}
+					break;
+			 case 2: printf("1.First list\n2.Secondlist\n");
+					scanf("%d",&ch1);
+					if(ch1==1)
+					{
+						display(s);
+						break;
+					}
+					else if(ch1==2)
+					{
+						display(s1);
+						break;
+					}
+					break;
+			 case 3: printf("1.First list\n2.Secondlist\n");
+					scanf("%d",&ch1);
+					if(ch1==1)
+					{
+						insend(s);
+						break;
+					}
+					else if(ch1==2)
+					{
+						insend(s1);
+						break;
+					}
+					break;
+			 case 4: s=insbeg(s);
+					 break;
+			 case 5: inspos(s);
+					 break;
+			 case 6: s=delend(s);
+					 break;
+			 case 7: s=delbeg(s);
+					 break;
+			 case 8: delpos(s);
+					 break;
+			 case 9: count(s);
+					 break;
+			 case 10: s=merge(s,s1);
+					  s1=NULL;
+					  break;
+			 case 11: printf("1.First list\n2.Secondlist\n");
+					  scanf("%d",&ch1);
+					  if(ch1==1)
+					  {
+						sort(s);
+						break;
+					  }
+					  else if(ch1==2)
+					  {
+						sort(s1);
+						break;
+					  }
+					  break;
+			 case 12: split(s);
+					  break;
+			 case 13: reverse(s);
+					  break;
+		}
+	}while(ch!=14);
+	return 0;
+}
+
+struct node *create(struct node *x)
+{
+	if(x==NULL)
+	{
+		x=(struct node*)malloc(sizeof(struct node));
+		printf("Enter the number\n");
+		scanf("%d",&x->n);
+		x->next=x;
+	}
+	else
+	{
+		printf("List has been created already\n");
+	}
+	return x;
+}
+
+void display(struct node *x)
+{
+	curr=x;
+	while(curr->next!=x)
+	{
+		printf("%d->",curr->n);
+		curr=curr->next;
+	}
+	printf("%d->\n",curr->n);
+}
+
+void insend(struct node *x)
+{
+	curr=x;
+	while(curr->next != x)
+	{
+		curr=curr->next;
+	}
+	temp=(struct node*)malloc(sizeof(struct node));
+	printf("Enter the number\n");
+	scanf("%d",&temp->n);
+	curr->next=temp;
+	temp->next=x;
+}
+
+struct node *insbeg(struct node *x)
+{
+	temp=(struct node *)malloc(sizeof(struct node));
+	printf("Enter the number\n");
+	scanf("%d",&temp->n);
+	temp->next=x;
+	while(curr->next != x)
+	{
+		curr=curr->next;
+	}
+	curr->next=temp;
+	return temp;
+}
+
+void inspos(struct node *x)
+{
+	int pos,c=0;
+	curr=x;
+	printf("Enter the position to be inserted\n");
+	scanf("%d",&pos);
+	while(curr->next!=x)
+	{
+		c++;
+		if(c==pos-1)
+		{
+			temp=(struct node*)malloc(sizeof(struct node));
+			printf("Enter the number\n");
+			scanf("%d",&temp->n);
+			temp->next=curr->next;
+			curr->next=temp;
+			break;
+		}
+		curr=curr->next;
+	}
+}
+
+struct node *delend(struct node *x)
+{
+	struct node *pr;
+	curr=x;
+	if(curr==NULL)
+	{
+		printf("No node to be deleted\n");
+	}
+	else if(curr->next == x)
+	{
+		printf("You deleting the one and only available node\n");
+		free(curr);
+		x=NULL;
+	}
+	else
+	{
+		while(curr->next != x)
+		{
+			pr=curr;
+			curr=curr->next;
+		}
+		free(curr);
+		pr->next=x;
+	}
+	return x;
+}
+
+struct node *delbeg(struct node *x)
+{
+	curr=x;
+	if(curr==NULL)
+	{
+		printf("No node to be deleted\n");
+		return x;
+	}
+	else if(curr->next == x)
+	{
+		printf("You are deleting the one and only available node\n");
+		free(curr);
+		x=NULL;
+		return x;
+	}
+	else
+	{
+		while(curr->next != x)
+		{
+			curr=curr->next;
+		}
+		temp=x;
+		x=x->next;
+		free(temp);
+		curr->next=x;
+		return x;
+	}
+}
+
+void delpos(struct node *x)
+{
+	int pos,c=0;
+	curr=x;
+	printf("Enter the position to be deleted\n");
+	scanf("%d",&pos);
+	while(curr->next != x)
+	{
+		c++;
+		if(c==pos-1)
+		{
+			temp=curr->next;
+			curr->next=curr->next->next;
+			free(temp);
+			break;
+		}
+		curr=curr->next;
+	}
+}
+
+void count (struct node *x)
+{
+	int c=0;
+	curr=x;
+	while(curr->next != x)
+	{
+		c++;
+		curr=curr->next;
+	}
+	c++;
+	printf("Number of nodes present is %d\n",c);
+}
+
+struct node* merge(struct node *x, struct node *y)
+{
+	struct node *pr;
+	curr=x;
+	while(curr->next != x)
+	{
+		curr=curr->next;
+	}
+	curr->next=y;
+	curr=curr->next;
+	while(curr->next != y)
+	{
+		curr=curr->next;
+	}
+	curr->next=x;
+	return x;
+}
+
+void sort(struct node *x)
+{
+	int i=0,j=0,c=0,te;
+	curr=x;
+	while(curr->next != x)
+	{
+		c++;
+		curr=curr->next;
+	}
+	c++;
+	for(i=0;i<c-1;i++)
+	{
+		curr=x;
+		for(j=0;j<c-i-1;j++)
+		{
+			if(curr->n > curr->next->n)
+			{
+				te=curr->n;
+				curr->n=curr->next->n;
+				curr->next->n=te;
+			}
+			curr=curr->next;
+		}
+	}
+}
+
+void split(struct node *x)
+{
+	int pos,c=0;
+	curr=x;
+	printf("Enter the position to be deleted\n");
+	scanf("%d",&pos);
+	while(curr->next != x)
+	{
+		c++;
+		if(c==pos)
+		{
+			curr->next = x;
+			break;
+		}
+		curr=curr->next;
+	}
+}
+
+
+void reverse(struct node *x)
+{
+	struct node *last;
+	curr=x;
+	while(curr->next != x)
+	{
+		curr=curr->next;
+	}
+	printf("%d->",curr->n);
+	last=curr;
+	do
+	{
+		curr=x;
+		while(curr->next != last)
+		{
+			curr=curr->next;
+		}
+		last=curr;
+		printf("%d->",curr->n);
+	}while(last != x);
+
+	printf("\n");
+}
