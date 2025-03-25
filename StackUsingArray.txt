@@ -1,0 +1,107 @@
+/* Stack using array
+ In array we can not delete any value stored in the memory.
+ We just move to the next address.
+*/
+#include<stdio.h>
+#include<conio.h>
+#define max_size 5
+int top=-1;
+
+void push(int[]);
+void pop(int[]);
+void display(int[]);
+void isempty();
+void isfull();
+
+int main()
+{
+	int arr[max_size],ch;
+	clrscr();
+	do
+	{
+		printf("1.Push\n");
+		printf("2.Pop\n");
+		printf("3.Display\n");
+		printf("4.IsEmpty\n");
+		printf("5.IsFull\n");
+		printf("6.Exit\n");
+		printf("Enter your choice\n");
+		scanf("%d",&ch);
+		switch(ch)
+		{
+			case 1: push(arr);
+					break;
+			case 2: pop(arr);
+					break;
+			case 3: display(arr);
+					break;
+			case 4: isempty(arr);
+					break;
+			case 5: isfull(arr);
+					break;
+		}
+	}while(ch!=6);
+	return 0;
+}
+
+void push(int x[max_size])
+{
+	if(top < max_size-1)
+	{
+		top++;
+		printf("Enter element\n");
+		scanf("%d",&x[top]);
+	}
+	else if(top == max_size-1)
+	{
+		isfull();
+	}
+}
+
+void pop(int x[max_size])
+{
+	if(top >=0)
+	{
+		printf("poping %d\n",x[top]);
+		top--;
+	}
+	else
+	{
+		isempty();
+	}
+}
+
+void display(int x[max_size])
+{
+	int i=0;
+	while(i <= top)
+	{
+		printf("%d\t",x[i]);
+		i++;
+	}
+	printf("\n");
+}
+
+void isempty()
+{
+	if(top==-1)
+	{
+		printf("Stack is empty (or) Stack is underflow\n");
+	}
+	else
+	{
+		printf("Stack is not empty\n");
+	}
+}
+
+void isfull()
+{
+	if(top==max_size-1)
+	{
+		printf("Stack is full\n");
+	}
+	else if(top<max_size-1)
+	{
+		printf("Stack is not full\n");
+	}
+}
