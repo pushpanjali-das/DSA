@@ -1,0 +1,36 @@
+/* Linear Search Model-2 */
+#include<stdio.h>
+#include<conio.h>
+
+int main()
+{
+	int a[10],n,se,*p,flag=0;
+	clrscr();
+	printf("Enter the  number of variables to be used\n");
+	scanf("%d",&n);
+	p=&a[0];
+	for(p=&a[0];p<&a[n];p++)
+	{
+		printf("Enter the value\n");
+		scanf("%d",p);
+	}
+	printf("Enter the element to be searched\n");
+	scanf("%d",&se);
+	for(p=&a[0];p<&a[n];p++)
+	{
+		if(se==*p)
+		{
+			flag=1;
+			break;
+		}
+	}
+	if(flag==1)
+	{
+		printf("Element found at address %u and at index %d\n",p,p-&a[0]);
+	}
+	else
+	{
+		printf("Element not found\n");
+	}
+	return 0;
+}
