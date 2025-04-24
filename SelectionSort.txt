@@ -1,0 +1,51 @@
+/* In selection sort, when we want to sort the array in ascending order first
+ we will find out the smallest element in the array and it's index then we will
+ swap this smallest element with the first index element.
+
+ Then the 2nd smallest value is to be found then swap this with the 2nd
+ element in the array and so on.
+
+ The number of passes required in this sorting is also same as in bubble sort
+ i.e.,n-1.
+
+ Assume the current index is the min_index (or) the current element is the minimum value
+ */
+
+#include<stdio.h>
+#include<conio.h>
+
+int main()
+{
+	int a[10],i,j,temp,min_pos,n;
+	clrscr();
+	printf("Enter the number of variables to be used\n");
+	scanf("%d",&n);
+	for(i=0;i<n;i++)
+	{
+		printf("Enter the value of a[%d]\n",i);
+		scanf("%d",&a[i]);
+	}
+	for(i=0;i<n-1;i++)	//To maintain the number of passes
+	{
+		min_pos=i;     	// Assume the current index is the min_index (or) the current element is the minimum value
+		for(j=i+1;j<n;j++)
+		{
+			if(a[min_pos]>a[j])
+			{
+				min_pos=j;
+			}
+		}
+		if(i!=min_pos)
+		{
+			temp=a[i];
+			a[i]=a[min_pos];
+			a[min_pos]=temp;
+		}
+	}
+	printf("Sorted array is\n");
+	for(i=0;i<n;i++)
+	{
+		printf("a[%d]=%d\n",i,a[i]);
+	}
+	return 0;
+}
